@@ -1,0 +1,11 @@
+{
+	"name": "object-indexer",
+	"version": "0.1.0",
+	"main": "./index.js",
+	"author": { "name": "TehShrike", "email": "me@JoshDuff.com", "url": "http://joshduff.com" },
+	"keywords": ["database", "memory", "order", "index", "object"],
+	"repository": { "type": "git", "url": "https://github.com/TehShrike/object-indexer.git" },
+	"dependencies": {
+		"underscore": "1.3.x"
+	}
+}
