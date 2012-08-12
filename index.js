@@ -74,18 +74,18 @@ var ObjectIndexer = function() {
 		})
 	}
 
-	this.getObjectsWithMatchingProperties = function(to_match) {
-		return getObjects(getIndexesOfObjectsWithMatchingProperties(to_match)).map(function(object) {
+	this.getObjectsWithMatchingProperties = function(to_match, callback) {
+		callback(getObjects(getIndexesOfObjectsWithMatchingProperties(to_match)).map(function(object) {
 			return ObjectIndexer.prototype.copyObject(object)
-		})
+		}))
 	}
 
-	this.getFirstObjectWithMatchingProperties = function(to_match) {
+	this.getFirstObjectWithMatchingProperties = function(to_match, callback) {
 		var matching_indexes = getIndexesOfObjectsWithMatchingProperties(to_match)
-		return matching_indexes.length > 0 && this.copyObject(objects[matching_indexes[0]])
+		callback(matching_indexes.length > 0 && this.copyObject(objects[matching_indexes[0]]))
 	}
 
-	this.getOrderedObjects = function(property_to_order_by, offset, count) {
+	this.getOrderedObjects = function(property_to_order_by, callback, offset, count) {
 		if (indexed_properties.hasOwnProperty(property_to_order_by)) {
 			var indexes
 			offset = offset || 0
@@ -96,11 +96,12 @@ var ObjectIndexer = function() {
 			} else {
 				indexes = indexed_properties[property_to_order_by]
 			}
-			return indexes.map(function(object_index) {
+			callback(indexes.map(function(object_index) {
 				return objects[object_index]
-			})
+			}))
+		} else {
+			callback([])
 		}
-		return []
 	}
 }
 
