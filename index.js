@@ -1,4 +1,4 @@
-var us = require('underscore')
+var us = typeof require === 'function' ? require('underscore') : _
 
 var ObjectIndexer = function() {
 	var self = this
@@ -76,7 +76,7 @@ var ObjectIndexer = function() {
 
 	this.getObjectsWithMatchingProperties = function(to_match, callback) {
 		callback(getObjects(getIndexesOfObjectsWithMatchingProperties(to_match)).map(function(object) {
-			return ObjectIndexer.prototype.copyObject(object)
+			return self.copyObject(object)
 		}))
 	}
 
@@ -130,6 +130,15 @@ ObjectIndexer.prototype.sortByPropertyValue = function(objects, indexed_properti
 			return (a_value < b_value) ? -1 : 1
 		})
 	}
+}
+
+ObjectIndexer.prototype.objectsMatch = function(obj1, obj2) {
+	if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+		return false
+	}
+	return Object.keys(obj1).every(function(property) {
+		return obj2.hasOwnProperty(property) && obj1[property] === obj2[property]
+	})
 }
 
 if (typeof module !== 'undefined'
