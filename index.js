@@ -105,17 +105,33 @@ var ObjectIndexer = function() {
 	}
 }
 
+// Based on http://stackoverflow.com/a/728694/201789
 ObjectIndexer.prototype.copyObject = function(obj) {
-	var copy = {}, value
-	copy.__proto__ = obj.__proto__
-	for (property in obj) {
-		if (obj.hasOwnProperty(property)) {
-			value = obj[property]
-			copy[property] = (typeof value === 'object' && typeof value !== null)
-				? objectIndexer.prototype.copyObject(value)
-				: value
+	// Handle the 3 simple types, and null or undefined
+	if (null === obj || "object" !== typeof obj) {
+		return obj
+	}
+
+	var copy = {}
+
+	if (obj instanceof Date) {
+		copy = new Date()
+		copy.setTime(obj.getTime())
+	}
+
+	if (obj instanceof Array) {
+		copy = []
+		for (var i = 0; i < obj.length; ++i) {
+			copy[i] = ObjectIndexer.prototype.copyObject(obj[i])
 		}
 	}
+
+	Object.getOwnPropertyNames(obj).filter(function(attr) {
+		return !copy.hasOwnProperty(attr)
+	}).forEach(function(attr) {
+		copy[attr] = obj[attr]
+	})
+
 	return copy
 }
 
