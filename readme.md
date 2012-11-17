@@ -1,5 +1,7 @@
 An extremely simple object store that supports returning the objects back to you in an ordered array sorted by any given property.  Meant for prototyping an app that will probably make use of a database eventually.
 
+Unlike [stupid-indexer](https://github.com/TehShrike/stupid-indexer), the objects that are stored are immutable.  When you perform a lookup, you are given a copy of the object, not the stored object itself.
+
 Supports asynchronous reading from the data store - not because it's necessary, but because that's almost certainly how you'll be interacting with the real database you use down the road.
 
 So let's say you decide to start storing objects in here:
@@ -65,5 +67,3 @@ Here, let me search for one of those objects:
 ...and if you want to, you can even remove objects.
 
 	a_place_to_keep_my_things.removeObjectsWithMatchingProperties({ type: 'facebook' })
-
-Coming soon maybe: unique keys!
