@@ -1,6 +1,6 @@
 {
 	"name": "object-indexer",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"main": "./index.js",
 	"author": { "name": "TehShrike", "email": "me@JoshDuff.com", "url": "http://joshduff.com" },
 	"keywords": ["database", "memory", "order", "index", "object"],
